@@ -18,6 +18,16 @@ proposing questions (of which the answer is obvious and already known).
 A labeler which gives the wrong answer will be reported to Docket administrators,
 that will check their activity and assert the congruous behaviour.
 
+### How-To Install and Run
+
+Before installing all the gems, it is highly recommended to create a new gemset
+if you are using Ruby Versioning Systems such as _rvm_ or _rbenv_. 
+If you are using a POSIX operating system with conventional installations of
+postgresql and rvm, you can simply descend into the Rails project directory and
+execute the script `setup.sh`, with no arguments. 
+_Do not execute the file from another directory!_ 
+The script will create a new gemset for the project with rvm, install all the
+required gems and setup the database for you.
 
 ## Roles
 
