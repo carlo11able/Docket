@@ -49,13 +49,14 @@ HEREDOC
 
 
 # If you are using bash...
-#echo $SHELL | grep bash || exit 0
+echo $SHELL | grep bash > /dev/null || exit 0
 
 # ...I can do something cool for you!
 cat << HEREDOC
 All done. I can also create for you a command 'lassi-project' which will setup
 the shell environment, making sure you are using the right gemset, and descend
-into the Docket directory, if you use bash.
+into the Docket directory, if you use bash. So, every time you open a new shell
+or terminal window, I'll do some annoying work for you if you type 'lassi-project'.
 Do you want me to do that? [Y/n] 
 HEREDOC
 
@@ -76,6 +77,7 @@ function lassi-project {
   echo 'Enjoy with Docket!'
 }
 HEREDOC
+    source $HOME/.bashrc
     ;;
   *)
     echo 'Did not create new command. Bye!'

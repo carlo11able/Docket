@@ -25,9 +25,21 @@ if you are using Ruby Versioning Systems such as _rvm_ or _rbenv_.
 If you are using a POSIX operating system with conventional installations of
 postgresql and rvm, you can simply descend into the Rails project directory and
 execute the script `setup.sh`, with no arguments. 
-_Do not execute the file from another directory!_ 
 The script will create a new gemset for the project with rvm, install all the
-required gems and setup the database for you.
+required gems and setup the database for you. Also, your password may be required
+to _sudo_ into the _postgres_ user.
+
+If you are using another OS, there's a brief list of things to do:
+
+* Possibly create a new, isolated gemset for the project
+* Create a new postgresql role (i.e. user) named _docket_
+* Create two empty databases, named *docket_development* and *docket_test*
+* Optionally, create another empty database called *docket_production*
+
+Remember that you must select the _docket_ gemset each time you change shell
+environment or terminal window.
+
+Finally, you can launch the server executing either `rails server` or `rackup`
 
 ## Roles
 
