@@ -1,0 +1,20 @@
+<h1>Lista users</h1>
+<table>
+<% @users.each do |user| %>
+<tr>
+<td>
+<%= user.email%>
+</td>
+<td>
+<%= user.name%>
+</td>
+<td>
+<%= user.surname%>
+</td>
+</tr>
+
+
+
+<% end %>
+
+</table>
