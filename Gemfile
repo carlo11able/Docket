@@ -14,6 +14,7 @@ gem 'pg'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -37,6 +38,12 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 gem 'devise'
+
+
+#gem "nokogiri", ">= 1.10.4"
+
+gem "canard", '~> 0.5.0.pre'
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

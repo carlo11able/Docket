@@ -1,0 +1,21 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>user_id:</strong>
+  <%= @answer.user_id %>
+</p>
+
+<p>
+  <strong>question_id:</strong>
+  <%= @answer.question_id %>
+</p>
+
+
+<p>
+  <strong>answer:</strong>
+  <%= @answer.answer %>
+</p>
+
+
+<%= link_to 'Edit', edit_photo_question_answer_path(@answer) %> |
+<%= link_to 'Back', photo_question_answers_path %>

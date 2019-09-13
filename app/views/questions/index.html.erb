@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>questions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Photo_id</th>
+      <th>question_text</th>
+      <th>question_answer1</th>
+      <th>question_answer2</th>
+
+      <th colspan="4"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @questions.each do |question| %>
+      <tr>
+        <td><%= question.photo_id %></td>
+        <td><%= question.question_text %></td>
+        <td><%= question.question_answer1 %></td>
+        <td><%= question.question_answer2 %></td>
+        <td><%= link_to 'Show', photo_question_path(params[:photo_id],question) %></td>
+        <td><%= link_to 'Edit', edit_photo_question_path(params[:photo_id],question) %></td>
+        <td><%= link_to 'Destroy', photo_question_path(params[:photo_id],question), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New question', new_photo_question_path %>
+<%= link_to 'QQuestion', photo_questions_path %>

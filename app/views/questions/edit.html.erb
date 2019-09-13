@@ -1,0 +1,6 @@
+<h1>Editing Question</h1>
+
+<%= render 'form', question: @question, url: photo_question_path(params[:photo_id],@question) %>
+
+<%= link_to 'Show', photo_question_path(params[:photo_id],@question) %></td>
+<%= link_to 'Back', photo_questions_path %>

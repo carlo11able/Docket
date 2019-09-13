@@ -6,5 +6,14 @@ Rails.application.routes.draw do
   #get ('/login') => redirect(:login) 
   get ("/") => redirect("users")
 
-  resources :users
+  # resources :photos ,:shallow => true do 
+  #   resources :questions
+  # end
+  resources :photos do 
+    resources :questions do 
+      resources :answers
+    end
+  end
+
+  resources :users 
 end

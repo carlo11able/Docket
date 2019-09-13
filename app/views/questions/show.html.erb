@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>photo_id:</strong>
+  <%= @question.photo_id %>
+</p>
+
+<p>
+  <strong>question_text:</strong>
+  <%= @question.question_text %>
+</p>
+
+
+<p>
+  <strong>question_answer1:</strong>
+  <%= @question.question_answer1 %>
+</p>
+
+<p>
+  <strong>question_answer2:</strong>
+  <%= @question.question_answer2 %>
+</p>
+
+<%= link_to 'Edit', edit_photo_question_path(@question) %> |
+<%= link_to 'Back', photo_questions_path %>
