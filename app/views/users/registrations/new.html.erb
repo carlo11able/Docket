@@ -31,6 +31,13 @@
     <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
   </div>
 
+  <p>
+    <b>Roles</b><br />
+    <%= f.radio_button :roles_mask, 'labeler', :checked => true %> Labeler<br />
+    <%= f.radio_button :roles_mask, 'customer' %> Customer<br />
+ </p>
+
+
   <div class="actions">
     <%= f.submit "Sign up" %>
   </div>

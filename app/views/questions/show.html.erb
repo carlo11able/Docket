@@ -1,9 +1,18 @@
 <p id="notice"><%= notice %></p>
 
+<% @photo=Photo.find(@question.photo_id)%>
 <p>
-  <strong>photo_id:</strong>
-  <%= @question.photo_id %>
+  <strong>url:</strong>
+  <%= @photo.url %>
 </p>
+<%= image_tag(@photo.url, alt: 'Image') if @photo.url %>
+
+<p>
+  <strong>image:</strong>
+  <%= @photo.image %>
+</p>
+
+<%= image_tag(@photo.image.url, alt: 'Image') if @photo.image? %>
 
 <p>
   <strong>question_text:</strong>
@@ -21,5 +30,5 @@
   <%= @question.question_answer2 %>
 </p>
 
-<%= link_to 'Edit', edit_photo_question_path(@question) %> |
-<%= link_to 'Back', photo_questions_path %>
+<%= link_to 'Edit', edit_photo_question_path(params[:photo_id],@question) %> |
+<%= link_to 'Back', photo_path(@photo) %>

@@ -1,33 +1,45 @@
 <p id="notice"><%= notice %></p>
 
 <h1>answers</h1>
-
+<h4><%= link_to 'New answer', new_answer_path %></h4>
+<%count=0%>
 <table>
-  <thead>
-    <tr>
-      <th>user_id</th>
-      <th>question_id</th>
-      <th>answer</th>
-
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
+    
     <% @answers.each do |answer| %>
+      <table>
       <tr>
-        <td><%= answer.user_id %></td>
-        <td><%= answer.question_id %></td>
-        <td><%= answer.answer %></td>
-        <td><%= link_to 'Show', photo_question_answer_path(params[:photo_id],params[:question_id],answer) %></td>
-        <td><%= link_to 'Edit', edit_photo_question_answer_path(params[:photo_id],params[:question_id],answer) %></td>
-        <td><%= link_to 'Destroy', photo_question_answer_path(params[:photo_id],params[:question_id],answer), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+      <% if can? :manage, answer%>
+      
+      <td>
+      <div class="img_with_text">
+      <% @question=Question.find(answer.question_id)%>
+      <% @photo=Photo.find(@question.photo_id)%>
+      <% if @photo.url != nil %>
+        <%= image_tag(@photo.url, alt: 'Image', class: "img_list") if @photo.url %>
+      <% else %>
+        <%= image_tag(@photo.image.url, alt: 'Image', class: "img_list") if @photo.image? %>
+      <%end%>
+
+        <%= @question.question_text %><br>
+        <%= link_to 'Show', answer_path(answer) %>
+        <%= link_to 'Edit', edit_answer_path(answer) %>
+        <%= link_to 'Destroy', answer_path(answer), method: :delete, data: { confirm: 'Are you sure?' } %>
+      </div>
+
+      </td>
+
+      <%count+=1%>
+      <%if(count%2==0)%>
+        </tr>
+        <tr>
+      <%end%>
+
+      
     <% end %>
-  </tbody>
-</table>
+
+    <% end %>
+    </table>
+
 
 <br>
 
-<%= link_to 'New answer', new_photo_question_answer_path %>
-<%= link_to 'Answer', photo_question_answers_path %>

@@ -11,15 +11,40 @@ class AnswersController < ApplicationController
     # GET /answers/1
     # GET /answers/1.json
     def show
+        @answer = Answer.new(:id => params[:id], :user_id => current_user.id)
+        begin
+            authorize! :read, @answer, :message => "BEWARE: You are not authorized to read a answer."
+        rescue CanCan::AccessDenied
+            render "static/accessdenied" , status: 403
+        end
+
+        begin
+            @answer = Answer.find params[:id]
+        rescue ActiveRecord::RecordNotFound 
+            render "static/notfound" , status: 404
+        end
+        
     end
 
     # GET /answers/new
     def new
-        @answer = Answer.new
+        @question=Question.order('RANDOM()').first
     end
 
     # GET /answers/1/edit
     def edit
+        @answer = Answer.new(:id => params[:id], :user_id => current_user.id)
+        begin
+            authorize! :update, @answer, :message => "BEWARE: You are not authorized to read a answer."
+        rescue CanCan::AccessDenied
+            render "static/accessdenied" , status: 403
+        end
+
+        begin
+            @answer = Answer.find params[:id]
+        rescue ActiveRecord::RecordNotFound 
+            render "static/notfound" , status: 404
+        end
     end
 
     # POST /answers
@@ -27,11 +52,14 @@ class AnswersController < ApplicationController
     def create
         # id_photo = params[:photo_id]
         # @photo = photo.find(id_photo)
-        @answer = Answer.new(answer_params)
 
+        #@answer = Answer.new(answer_params)
+        @parameter=answer_params
+        @parameter["user_id"]=current_user.id
+        @answer=Answer.new(@parameter)
         respond_to do |format|
             if @answer.save
-            format.html { redirect_to photo_question_answers_path, notice: 'Answer was successfully created.' }
+            format.html { redirect_to answers_path, notice: 'Answer was successfully created.' }
             #format.json { render :show, status: :created, location: @answer }
             else
             format.html { render :new }
@@ -45,7 +73,7 @@ class AnswersController < ApplicationController
     def update
         respond_to do |format|
         if @answer.update(answer_params)
-            format.html { redirect_to photo_question_answer_path(aux_params[:photo_id],answer_params[:question_id],@answer), notice: 'Answer was successfully updated.' }
+            format.html { redirect_to answer_path(@answer), notice: 'Answer was successfully updated.' }
             #format.json { render :show, status: :ok, location: @answer }
         else
             format.html { render :edit }
@@ -72,13 +100,11 @@ class AnswersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def answer_params
-        params.require(:answer).permit(:answer,:user_id,:question_id)
+        params.require(:answer).permit(:answer,:question_id)
         #params.permit(:photo_id, :answer_text)
     end
 
-    def aux_params
-        params.permit(:photo_id)
-    end
+    
 end
 
 

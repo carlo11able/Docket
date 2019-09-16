@@ -1,6 +1,66 @@
-<h1>Editing Question</h1>
+<h1>Editing Answer</h1>
 
-<%= render 'form', answer: @answer, url: photo_question_answer_path(params[:photo_id],params[:question_id],@answer) %>
 
-<%= link_to 'Show', photo_question_answer_path(params[:photo_id],params[:question_id],@answer) %></td>
-<%= link_to 'Back', photo_question_answers_path %>
+<% @question=Question.find(@answer.question_id)%>
+<% @photo=Photo.find(@question.photo_id)%>
+
+<p>
+  <strong>url:</strong>
+  <%= @photo.url %>
+</p>
+<%= image_tag(@photo.url, alt: 'Image') if @photo.url %>
+
+<p>
+  <strong>image:</strong>
+  <%= @photo.image %>
+</p>
+
+<%= image_tag(@photo.image.url, alt: 'Image') if @photo.image? %>
+
+<p>
+  <strong>photo_id:</strong>
+  <%= @question.photo_id %>
+</p>
+
+
+
+
+
+<%= form_with(model:@answer , url: answer_path(@answer), local: true) do |f| %>
+  <% if @answer.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@answer.errors.count, "error") %> prohibited this answer from being saved:</h2>
+
+      <ul>
+      <% @answer.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= hidden_field(:answer, :question_id, value: @question.id) %>
+
+    <p>
+    <strong>question_text:</strong>
+    <%= @question.question_text %>
+    </p>
+
+    <b>Answer:</b><br />
+    <%if @answer.answer==2%>
+        <%= f.radio_button :answer, '1' %> <%= @question.question_answer1 %> <br />
+        <%= f.radio_button :answer, '2', :checked => true %><strong> <%= @question.question_answer2%></strong> <br />
+    <%else%>
+        <%= f.radio_button :answer, '1', :checked => true %><strong> <%= @question.question_answer1 %></strong> <br />
+        <%= f.radio_button :answer, '2' %> <%= @question.question_answer2%> <br />
+
+    <%end%>
+    <div class="actions">
+        <%= f.submit %>
+    </div>
+<% end %>
+
+
+
+<%= link_to 'Show', answer_path(@answer) %></td>
+<%= link_to 'Back', answers_path %>

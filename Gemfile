@@ -46,20 +46,34 @@ gem 'devise'
 
 #gem "nokogiri", ">= 1.10.4"
 
-gem "canard", '~> 0.5.0.pre'
 
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '>= 2.15'
+  #gem 'capybara', '>= 2.15'
+  gem 'capybara'
+
+  gem 'capybara-webkit', '~>1.15.1'
+
   gem 'selenium-webdriver'
   # Use RSpec for integration/feature/request/model tests
   # WARNING: We haven't specified a version, be ready to rollback in case of
   #   retrocompatibilty break
   gem 'rspec'
+  #gem 'rspec-rails'
+
+  gem 'factory_bot_rails'
+  #gem 'cucumber-rails', require: false
+  gem 'cucumber-rails-training-wheels' # some pre-fabbed step definitions
   gem 'rspec-rails'
+  gem 'database_cleaner' # to clear Cucumber's test database between runs
+  gem 'launchy'          # a useful debugging aid for user stories
+
+
+
+
 end
 
 group :development do
@@ -80,3 +94,8 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+
+gem 'carrierwave', '~> 2.0'
+
+gem 'cancancan'

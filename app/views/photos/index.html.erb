@@ -2,27 +2,27 @@
 
 <h1>photos</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>User_id</th>
-      <th>Url</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
 
-  <tbody>
+
     <% @photos.each do |photo| %>
+      
+      <% if can? :manage, photo%>
+      <br>
+      <%if photo.url!=nil%>
+        <%= image_tag(photo.url, alt: 'Image', class: "img_list") if photo.url %>
+      <%else%> 
+        <%= image_tag(photo.image.url, alt: 'Image', class: "img_list") if photo.image? %>
+      <%end%>
+      <table>
       <tr>
-        <td><%= photo.user_id %></td>
-        <td><%= photo.url %></td>
         <td><%= link_to 'Show', photo %></td>
         <td><%= link_to 'Edit', edit_photo_path(photo) %></td>
         <td><%= link_to 'Destroy', photo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
+      </table>
+      <% end%>
     <% end %>
-  </tbody>
-</table>
+
 
 <br>
 

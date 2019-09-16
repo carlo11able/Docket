@@ -11,20 +11,19 @@
     </div>
   <% end %>
 
-  <%= hidden_field(:question, :photo_id, value: params[:photo_id]) %>
   <div class="field">
     <%= form.label :question_text %>
-    <%= form.text_field :question_text, id: :question_question_text %>
+    <%= form.text_field :question_text, id: :question_question_text ,size:30,maxlength: 100%>
   </div>
 
   <div class="field">
     <%= form.label :question_answer1 %>
-    <%= form.text_field :question_answer1, id: :question_question_answer1 %>
+    <%= form.text_field :question_answer1, id: :question_question_answer1 ,size:30, maxlength: 50%>
   </div>
 
   <div class="field">
     <%= form.label :question_answer2 %>
-    <%= form.text_field :question_answer2, id: :question_question_answer2 %>
+    <%= form.text_field :question_answer2, id: :question_question_answer2, size:30,maxlength:50%>
   </div>
 
 

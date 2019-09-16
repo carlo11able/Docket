@@ -11,15 +11,19 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id, id: :photo_user_id %>
-  </div>
+ 
+  <% if current_user.has_role? :admin %>
+    <div class="field">
+      <%= form.label :url %>
+      <%= form.text_field :url, id: :photo_url, maxlength: 30,  placeholder: "Inserisci il termine di ricerca"%>
+    </div>
+  <%else%>
 
-  <div class="field">
-    <%= form.label :url %>
-    <%= form.text_field :url, id: :photo_url %>
+  <div>
+    <%= form.label :image %>
+    <%= form.file_field :image %>
   </div>
+  <%end%>
 
 
   <div class="actions">

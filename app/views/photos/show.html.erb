@@ -1,15 +1,29 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>user_id:</strong>
-  <%= @photo.user_id %>
-</p>
+<%if @photo.url!=nil%>
+<%= image_tag(@photo.url, alt: 'Image') if @photo.url %>
+<%else%> 
+<%= image_tag(@photo.image.url, alt: 'Image') if @photo.image? %>
+<%end%>
 
-<p>
-  <strong>url:</strong>
-  <%= @photo.url %>
-</p>
-
+<h4>
+<%= link_to 'New', new_photo_path %> |
 
 <%= link_to 'Edit', edit_photo_path(@photo) %> |
 <%= link_to 'Back', photos_path %>
+</h4>
+
+
+<% @questions=Question.where(:photo_id => @photo.id)%>
+<% @questions.each do |question| %>
+  <h3><%= question.question_text %></h3>
+  <ul>
+  <li><%= question.question_answer1 %> (Num Answer: <%=question.count_answer1%>)</li>
+  <li><%= question.question_answer2 %> (Num Answer: <%=question.count_answer2%>)</li>
+  <%= link_to 'Show', photo_question_path(@photo.id,question) %>
+  <%= link_to 'Edit', edit_photo_question_path(@photo.id,question) %>
+  <%= link_to 'Destroy', photo_question_path(@photo.id,question), method: :delete, data: { confirm: 'Are you sure?' } %>
+  </ul>
+  <br>
+<% end %>
+

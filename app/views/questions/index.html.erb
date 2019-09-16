@@ -16,6 +16,7 @@
 
   <tbody>
     <% @questions.each do |question| %>
+      <% if can? :manage, question%>
       <tr>
         <td><%= question.photo_id %></td>
         <td><%= question.question_text %></td>
@@ -25,6 +26,7 @@
         <td><%= link_to 'Edit', edit_photo_question_path(params[:photo_id],question) %></td>
         <td><%= link_to 'Destroy', photo_question_path(params[:photo_id],question), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
+      <% end %>  
     <% end %>
   </tbody>
 </table>

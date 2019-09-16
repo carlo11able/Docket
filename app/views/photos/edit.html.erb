@@ -1,5 +1,17 @@
 <h1>Editing photo</h1>
 
+<strong>url:</strong>
+  <%= @photo.url %>
+</p>
+<%= image_tag(@photo.url, alt: 'Image') if @photo.url %>
+
+<p>
+  <strong>image:</strong>
+  <%= @photo.image %>
+</p>
+
+<%= image_tag(@photo.image.url, alt: 'Image') if @photo.image? %>
+
 <%= render 'form', photo: @photo %>
 
 <%= link_to 'Show', @photo %> |

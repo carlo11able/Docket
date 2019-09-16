@@ -1,21 +1,45 @@
 <p id="notice"><%= notice %></p>
 
+<% @question=Question.find(@answer.question_id)%>
+<% @photo=Photo.find(@question.photo_id)%>
+
+
 <p>
-  <strong>user_id:</strong>
-  <%= @answer.user_id %>
+  <strong>url:</strong>
+  <%= @photo.url %>
 </p>
+<%= image_tag(@photo.url, alt: 'Image') if @photo.url %>
+
+<p>
+  <strong>image:</strong>
+  <%= @photo.image %>
+</p>
+
+<%= image_tag(@photo.image.url, alt: 'Image') if @photo.image? %>
+
+
 
 <p>
   <strong>question_id:</strong>
   <%= @answer.question_id %>
 </p>
 
+  <p>
+    <strong>question_text:</strong>
+    <%= @question.question_text %>
+  </p>
 
-<p>
-  <strong>answer:</strong>
-  <%= @answer.answer %>
-</p>
+  <b>Answer:</b><br />
+    <%if @answer.answer==2%>
+        <%= @question.question_answer1 %> <br />
+        <strong> <%= @question.question_answer2%></strong> <br />
+    <%else%>
+        <strong> <%= @question.question_answer1 %></strong> <br />
+        <%= @question.question_answer2%> <br />
+
+    <%end%>
 
 
-<%= link_to 'Edit', edit_photo_question_answer_path(@answer) %> |
-<%= link_to 'Back', photo_question_answers_path %>
+
+<%= link_to 'Edit', edit_answer_path(@answer) %> |
+<%= link_to 'Back', answers_path %>

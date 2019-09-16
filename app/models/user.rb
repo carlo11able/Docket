@@ -11,6 +11,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :omniauthable, :omniauth_providers => [:facebook]
+
+  ROLES = [:admin, :labeler, :customer, :guest]
+  
   
   # def self.create_with_omniauth(auth)
   
@@ -33,6 +36,7 @@ class User < ApplicationRecord
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.email = auth.info.email
       user.password = Devise.friendly_token[0,20]
+      user.roles_mask=2
       parse_name(user, auth.info.name)
     end
     
@@ -46,6 +50,27 @@ class User < ApplicationRecord
     end
   end
 
+  def roles= (roles)
+    self.roles_mask = (roles & ROLES).map { |r| 2** ROLES.index(r) }.sum
+  end
+
+  def roles_int(roles)
+    (roles & ROLES).map { |r| 2** ROLES.index(r) }.sum
+  end
+  
+  def roles
+    ROLES.reject { |r| ((roles_mask || 0) & 2** ROLES.index(r)).zero? }
+  end
+  
+  def role_strings
+    roles.map(& :to_s )
+  end
+
+
+  def has_role?(requested_role )
+    roles.include?(requested_role)
+
+  end
 
   private
   def self.parse_name(user, name)
