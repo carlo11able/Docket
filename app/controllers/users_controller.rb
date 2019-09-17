@@ -24,7 +24,7 @@ class UsersController < ApplicationController
 
     def customers
         begin
-            authorize! :read, User, :message => "BEWARE: You are not authorized to read a photo."
+            authorize! :manage, User, :message => "BEWARE: You are not authorized to read a photo."
         rescue CanCan::AccessDenied
             #render html: "ACCESSO NEGATO" , status: 403
             render "static/accessdenied" , status: 403
@@ -34,7 +34,7 @@ class UsersController < ApplicationController
 
     def labelers
         begin
-            authorize! :read, User, :message => "BEWARE: You are not authorized to read a photo."
+            authorize! :manage, User, :message => "BEWARE: You are not authorized to read a photo."
         rescue CanCan::AccessDenied
             #render html: "ACCESSO NEGATO" , status: 403
             render "static/accessdenied" , status: 403

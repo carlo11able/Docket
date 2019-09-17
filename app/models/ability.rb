@@ -52,7 +52,6 @@ class Ability
     else
       if user.has_role? :labeler
         can [:read,:update,:delete],User, id: user.id
-        can :manage,User, id: user.id
         can :manage, Answer, user_id: user.id
         #can :read, Question
       else
