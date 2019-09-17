@@ -1,0 +1,10 @@
+<h1>Customer's list</h2>
+<h4><%= link_to 'Back', users_path %></h4>
+
+<% @customers.each do |customer|%>
+<h3>
+<strong><%=customer.email%></strong>
+<%= link_to 'View Customer', user_path(customer) %>
+</h3>
+<br>
+<%end%>

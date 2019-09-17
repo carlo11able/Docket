@@ -1,18 +1,17 @@
 <h1>Editing photo</h1>
 
-<strong>url:</strong>
-  <%= @photo.url %>
-</p>
-<%= image_tag(@photo.url, alt: 'Image') if @photo.url %>
+<h4>
+<%= link_to 'New Photo', @photo %> |
+<%= link_to 'Show Photo', @photo %> |
+<%= link_to 'Destroy Photo', photo_path(@photo) , method: :delete, data: { confirm: 'Are you sure?' } %>
+<%= link_to 'Back', photos_path %>
+</h4>
 
-<p>
-  <strong>image:</strong>
-  <%= @photo.image %>
-</p>
-
-<%= image_tag(@photo.image.url, alt: 'Image') if @photo.image? %>
+<%if @photo.url!=nil%>
+  <%= image_tag(@photo.url, alt: 'Image') if @photo.url %>
+<%else%> 
+  <%= image_tag(@photo.image.url, alt: 'Image') if @photo.image? %>
+<%end%>
 
 <%= render 'form', photo: @photo %>
 
-<%= link_to 'Show', @photo %> |
-<%= link_to 'Back', photos_path %>

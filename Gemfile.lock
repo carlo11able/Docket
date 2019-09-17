@@ -313,6 +313,7 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   launchy
   listen (>= 3.0.5, < 3.2)
+  nokogiri (>= 1.10.4)
   omniauth-facebook
   pg
   puma (~> 3.7)

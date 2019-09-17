@@ -1,45 +1,37 @@
-<p id="notice"><%= notice %></p>
 
 <% @question=Question.find(@answer.question_id)%>
 <% @photo=Photo.find(@question.photo_id)%>
 
-
-<p>
-  <strong>url:</strong>
-  <%= @photo.url %>
-</p>
-<%= image_tag(@photo.url, alt: 'Image') if @photo.url %>
-
-<p>
-  <strong>image:</strong>
-  <%= @photo.image %>
-</p>
-
-<%= image_tag(@photo.image.url, alt: 'Image') if @photo.image? %>
-
-
-
-<p>
-  <strong>question_id:</strong>
-  <%= @answer.question_id %>
-</p>
-
-  <p>
-    <strong>question_text:</strong>
-    <%= @question.question_text %>
-  </p>
-
-  <b>Answer:</b><br />
-    <%if @answer.answer==2%>
-        <%= @question.question_answer1 %> <br />
-        <strong> <%= @question.question_answer2%></strong> <br />
-    <%else%>
-        <strong> <%= @question.question_answer1 %></strong> <br />
-        <%= @question.question_answer2%> <br />
-
-    <%end%>
-
-
-
-<%= link_to 'Edit', edit_answer_path(@answer) %> |
+<h4>
+<%= link_to 'New Answer', new_answer_path %> |
+<%= link_to 'Edit Answer', edit_answer_path(@answer) %> |
+<%= link_to 'Destroy Answer', answer_path(@answer) , method: :delete, data: { confirm: 'Are you sure?' } %>
 <%= link_to 'Back', answers_path %>
+</h4>
+
+<%if @photo.url!=nil%>
+  <%= image_tag(@photo.url, alt: 'Image') if @photo.url %>
+<%else%> 
+  <%= image_tag(@photo.image.url, alt: 'Image') if @photo.image? %>
+<%end%>
+
+
+
+  
+
+
+
+  <h3><%= @question.question_text %></h3>
+
+  <ul>
+  <%if @answer.answer==1%>
+    <li><strong><span id="winner"><%= @question.question_answer1 %></strong></span></li>
+    <li><strong><span id="loser"><%= @question.question_answer2 %></strong></span></li>
+  <%else%>
+    <li><strong><span id="loser"><%= @question.question_answer1 %></strong></span></li>
+    <li><strong><span id="winner"><%= @question.question_answer2 %></strong></span></li>
+  <%end%>
+  
+  </ul>
+
+

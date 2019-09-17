@@ -1,8 +1,7 @@
-<p id="notice"><%= notice %></p>
 
 <h1>photos</h1>
 
-
+<h4><%= link_to 'New photo', new_photo_path %></h4>
 
     <% @photos.each do |photo| %>
       
@@ -26,4 +25,3 @@
 
 <br>
 
-<%= link_to 'New photo', new_photo_path %>

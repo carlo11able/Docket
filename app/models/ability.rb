@@ -43,14 +43,14 @@ class Ability
     # else
     #   cannot :update, Photo
     # end
-    if user.has_role? :labeler  # additional permissions f o r logged in users (they can manage their posts)
+    if user.has_role? :customer  # additional permissions f o r logged in users (they can manage their posts)
       can [:read,:update,:delete],User, id: user.id
 
       can :manage, Photo, user_id: user.id
       can :manage, Question, photo: {user: {id: user.id } }
       #cannot :manage, Answer
     else
-      if user.has_role? :customer
+      if user.has_role? :labeler
         can [:read,:update,:delete],User, id: user.id
         can :manage,User, id: user.id
         can :manage, Answer, user_id: user.id

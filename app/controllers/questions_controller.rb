@@ -13,6 +13,8 @@ class QuestionsController < ApplicationController
       #render html: "ACCESSO NEGATO" , status: 403
       render "static/accessdenied" , status: 403
     end
+
+    redirect_to photo_path(params[:photo_id])
     
     @questions = Question.all
   end

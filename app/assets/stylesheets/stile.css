@@ -5,18 +5,18 @@ body{
 
 
 .img_list{
-    /* display: inline; */
-    width: 100%;
+    width: 300px;
     height: auto;
+
 }
 
 .img_with_text{
   text-align: justify;
-  width: 30%
+  width: 300px;
 }
 
 .img_with_text img{
-  /* display: block; */
+  display: block;
   margin: 0 auto;
 }
 
@@ -25,7 +25,7 @@ a{
 }
 
 a:link{
-    color: rgb(255,251,0)
+    color: rgb(225, 0, 255)
 }
 
 a:visited{
@@ -75,4 +75,29 @@ a:hover{
   .topnav a.active {
     background-color: #4CAF50;
     color: white;
+  }
+
+
+  p[class="alert alert-danger"]{
+    color: rgb(230,10,20)
+  }
+
+
+  p[class="alert alert-success"]{
+    color: rgb(20,230,20)
+  }
+
+
+  #winner{
+    color: rgb(0,255,0)
+  }
+
+
+  #draw{
+    color: rgb(255,255,0)
+  }
+
+
+  #loser{
+    color: rgb(255,0,0)
   }

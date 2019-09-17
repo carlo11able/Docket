@@ -1,29 +1,47 @@
-<p id="notice"><%= notice %></p>
+<h4>
+<%= link_to 'New Photo', new_photo_path %> |
+
+<%= link_to 'Edit Photo', edit_photo_path(@photo) %> |
+<%= link_to 'Destroy Photo', photo_path(@photo) , method: :delete, data: { confirm: 'Are you sure?' } %>|
+
+<%= link_to 'Back', photos_path %>
+</h4>
 
 <%if @photo.url!=nil%>
-<%= image_tag(@photo.url, alt: 'Image') if @photo.url %>
+  <%= image_tag(@photo.url, alt: 'Image') if @photo.url %>
 <%else%> 
-<%= image_tag(@photo.image.url, alt: 'Image') if @photo.image? %>
+  <%= image_tag(@photo.image.url, alt: 'Image') if @photo.image? %>
 <%end%>
 
 <h4>
-<%= link_to 'New', new_photo_path %> |
-
-<%= link_to 'Edit', edit_photo_path(@photo) %> |
-<%= link_to 'Back', photos_path %>
+<%= link_to 'New Question', new_photo_question_path(@photo) %>
 </h4>
 
 
 <% @questions=Question.where(:photo_id => @photo.id)%>
 <% @questions.each do |question| %>
+  <%count1=question.count_answer1%>
+  <%count2=question.count_answer2%>
+
   <h3><%= question.question_text %></h3>
   <ul>
-  <li><%= question.question_answer1 %> (Num Answer: <%=question.count_answer1%>)</li>
-  <li><%= question.question_answer2 %> (Num Answer: <%=question.count_answer2%>)</li>
+  <%if count1>count2%>
+    <li><strong><span id="winner"><%= question.question_answer1 %></strong> (Num Answer: <%=question.count_answer1%>)</span></li>
+    <li><strong><span id="loser"><%= question.question_answer2 %></strong> (Num Answer: <%=question.count_answer2%>)</span></li>
+  <%else%>
+    <%if count2>count1%>
+      <li><strong><span id="loser"><%= question.question_answer1 %></strong> (Num Answer: <%=question.count_answer1%>)</span></li>
+      <li><strong><span id="winner"><%= question.question_answer2 %></strong> (Num Answer: <%=question.count_answer2%>)</span></li>
+    <%else%>
+      <li><strong><span id="draw"><%= question.question_answer1 %></strong> (Num Answer: <%=question.count_answer1%>)</span></li>
+      <li><strong><span id="draw"><%= question.question_answer2 %></strong> (Num Answer: <%=question.count_answer2%>)</span></li>
+    <%end%>
+  <%end%>
+  
   <%= link_to 'Show', photo_question_path(@photo.id,question) %>
   <%= link_to 'Edit', edit_photo_question_path(@photo.id,question) %>
   <%= link_to 'Destroy', photo_question_path(@photo.id,question), method: :delete, data: { confirm: 'Are you sure?' } %>
   </ul>
-  <br>
+  
 <% end %>
 

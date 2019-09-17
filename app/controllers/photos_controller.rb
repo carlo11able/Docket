@@ -61,8 +61,12 @@ class PhotosController < ApplicationController
     end
 
     def create
-
-        @parameter=params[:photo].permit(:url, :image)
+        begin
+            @parameter=photo_params
+        rescue NoMethodError
+            redirect_to new_photo_path, alert: 'Error photo was not successfully created.' 
+            return
+        end
         puts "ANDREEAAA"
         puts @parameter
         puts "MNAMA"
@@ -87,7 +91,7 @@ class PhotosController < ApplicationController
 
         respond_to do |format|
           if @photo.save
-            format.html { redirect_to @photo, notice: 'photo was successfully created.' }
+            format.html { redirect_to @photo, notice: 'Photo was successfully created.' }
             format.json { render :show, status: :created, location: @photo }
           else
             format.html { render :new }
@@ -117,6 +121,13 @@ class PhotosController < ApplicationController
     end
 
     def update
+        begin
+            @parameter=photo_params
+        rescue NoMethodError
+            redirect_to edit_photo_path(params[:id]), alert: 'Error photo was not successfully updated.' 
+            return
+        end
+
         @photo = Photo.new(:user_id => current_user.id)
         begin
             authorize! :update, @photo, :message => "BEWARE: You are not authorized to read a photo."
@@ -133,7 +144,7 @@ class PhotosController < ApplicationController
         
         respond_to do |format|
             if @photo.update(photo_params)
-              format.html { redirect_to photo_path(@photo), notice: 'Question was successfully updated.' }
+              format.html { redirect_to photo_path(@photo), notice: 'Photo was successfully updated.' }
             else
               format.html { render :edit }
             end
@@ -161,5 +172,12 @@ class PhotosController < ApplicationController
         redirect_to photos_path
     end
     
+
+
+    private
+
+    def photo_params
+        params[:photo].permit(:url, :image)
+    end
 
 end

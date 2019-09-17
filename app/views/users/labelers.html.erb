@@ -1,0 +1,12 @@
+<h1>Labeler's list</h2>
+<h4><%= link_to 'Back', users_path %></h4>
+
+<% @labelers.each do |labeler|%>
+<h3>
+<strong><%=labeler.email%></strong>
+<%= link_to 'View Labeler', user_path(labeler) %>
+</h3>
+<br>
+<%end%>
+
+

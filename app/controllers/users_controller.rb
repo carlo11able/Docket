@@ -3,9 +3,6 @@ class UsersController < ApplicationController
     #protect_from_forgery with: :null_session        #annulla CSRF token authentication
     before_action :authenticate_user!
 
-    #acts_as_user :roles => [ :labeler, :customer, :admin ]
-
-    #skip_before_action :verify_authenticity_token      #another way to deactivate CSRF token authentication
 
     
     def smistamento
@@ -14,14 +11,35 @@ class UsersController < ApplicationController
             redirect_to users_path
         end
 
-        if(current_user.has_role? :labeler)
+        if(current_user.has_role? :customer)
             redirect_to photos_path
         end
 
-        if(current_user.has_role? :customer)
+        if(current_user.has_role? :labeler)
             redirect_to answers_path
         end
 
+    end
+
+
+    def customers
+        begin
+            authorize! :read, User, :message => "BEWARE: You are not authorized to read a photo."
+        rescue CanCan::AccessDenied
+            #render html: "ACCESSO NEGATO" , status: 403
+            render "static/accessdenied" , status: 403
+        end
+        @customers=User.where(roles_mask: 4)
+    end
+
+    def labelers
+        begin
+            authorize! :read, User, :message => "BEWARE: You are not authorized to read a photo."
+        rescue CanCan::AccessDenied
+            #render html: "ACCESSO NEGATO" , status: 403
+            render "static/accessdenied" , status: 403
+        end
+        @labelers=User.where(roles_mask: 2)
     end
     
     

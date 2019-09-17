@@ -13,6 +13,10 @@ Rails.application.routes.draw do
   
   get "/home" => "users#smistamento"
 
+  get "users/customers" => "users#customers"
+
+  get "users/labelers" => "users#labelers"
+
   # resources :photos ,:shallow => true do 
   #   resources :questions
   # end

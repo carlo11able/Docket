@@ -1,34 +1,32 @@
-<p id="notice"><%= notice %></p>
 
 <% @photo=Photo.find(@question.photo_id)%>
-<p>
-  <strong>url:</strong>
-  <%= @photo.url %>
-</p>
-<%= image_tag(@photo.url, alt: 'Image') if @photo.url %>
-
-<p>
-  <strong>image:</strong>
-  <%= @photo.image %>
-</p>
-
-<%= image_tag(@photo.image.url, alt: 'Image') if @photo.image? %>
-
-<p>
-  <strong>question_text:</strong>
-  <%= @question.question_text %>
-</p>
-
-
-<p>
-  <strong>question_answer1:</strong>
-  <%= @question.question_answer1 %>
-</p>
-
-<p>
-  <strong>question_answer2:</strong>
-  <%= @question.question_answer2 %>
-</p>
-
-<%= link_to 'Edit', edit_photo_question_path(params[:photo_id],@question) %> |
+<h4>
+<%= link_to 'New Question', new_photo_question_path(params[:photo_id]) %> | 
+<%= link_to 'Edit Question', edit_photo_question_path(params[:photo_id],@question) %> |
+<%= link_to 'Destroy Question', photo_question_path(params[:photo_id],@question) , method: :delete, data: { confirm: 'Are you sure?' } %> | 
 <%= link_to 'Back', photo_path(@photo) %>
+</h4>
+
+<% if @photo.url != nil %>
+  <%= image_tag(@photo.url, alt: 'Image') if @photo.url %>
+<% else %>
+  <%= image_tag(@photo.image.url, alt: 'Image') if @photo.image? %>
+<%end%>
+
+<%count1=@question.count_answer1%>
+<%count2=@question.count_answer2%>
+
+  <h3><%= @question.question_text %></h3>
+  <ul>
+  <%if count1>count2%>
+    <li><strong><span id="winner"><%= @question.question_answer1 %></strong> (Num Answer: <%=@question.count_answer1%>)</span></li>
+    <li><strong><span id="loser"><%= @question.question_answer2 %></strong> (Num Answer: <%=@question.count_answer2%>)</span></li>
+  <%else%>
+    <%if count2>count1%>
+      <li><strong><span id="loser"><%= @question.question_answer1 %></strong> (Num Answer: <%=@question.count_answer1%>)</span></li>
+      <li><strong><span id="winner"><%= @question.question_answer2 %></strong> (Num Answer: <%=@question.count_answer2%>)</span></li>
+    <%else%>
+      <li><strong><span id="draw"><%= @question.question_answer1 %></strong> (Num Answer: <%=@question.count_answer1%>)</span></li>
+      <li><strong><span id="draw"><%= @question.question_answer2 %></strong> (Num Answer: <%=@question.count_answer2%>)</span></li>
+    <%end%>
+  <%end%>

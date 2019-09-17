@@ -1,26 +1,21 @@
 <h1>New question</h1>
 
 <% @photo=Photo.find(@question.photo_id)%>
-<p>
-  <strong>url:</strong>
-  <%= @photo.url %>
-</p>
-<%= image_tag(@photo.url, alt: 'Image') if @photo.url %>
 
-<p>
-  <strong>image:</strong>
-  <%= @photo.image %>
-</p>
-
-<%= image_tag(@photo.image.url, alt: 'Image') if @photo.image? %>
-
-
-
-<%= render 'form', question: @question , url: photo_questions_path %>
-
-
+<h4>
 <%= link_to 'Back', photo_path(@photo) %>
+</h4>
 
+
+<% if @photo.url != nil %>
+  <%= image_tag(@photo.url, alt: 'Image') if @photo.url %>
+<% else %>
+  <%= image_tag(@photo.image.url, alt: 'Image') if @photo.image? %>
+<%end%>
+
+<h3>
+<%= render 'form', question: @question , url: photo_questions_path %>
+</h3>
 
 
 
