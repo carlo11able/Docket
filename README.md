@@ -17,6 +17,7 @@ image hosting service - to select, by keywords, randomly choosen pictures, and
 proposing questions (of which the answer is obvious and already known).
 A labeler which gives the wrong answer will be reported to Docket administrators,
 that will check their activity and assert the congruous behaviour.
+The control on this interface belongs to the Admins.
 
 ### How-To Install and Run
 
@@ -38,6 +39,9 @@ If you are using another OS, there's a brief list of things to do:
 
 Remember that you must select the _docket_ gemset each time you change shell
 environment or terminal window.
+
+Once the databases are created, you may need to `rails db:migrate`, also for
+the testing environment.
 
 Finally, you can launch the server executing either `rails server` or `rackup`
 
@@ -66,23 +70,6 @@ the developers.
 ## Data Models
 
 Below are defined the data models used by Docket.
-
-Inheritance will be almost surely implemented via Single Table Inheritance (here is
-[a stunning StackOverflow post](https://stackoverflow.com/questions/23374216/inheritance-of-rails-models)
-on that)
-
-**TODO**: Define a proper relationship between _Picture_ and _Question_, which
-shall be easily represented through Rails models. 
-The "problem" is that, to keep a many-to-many relationship between them, we
-should use something like `has_many <xxx> through: <yyy>` or
-`has_many_and_belongs_to`, which creates a new relation table (see
-[Rails Association Basics](https://edgeguides.rubyonrails.org/association_basics.html)).
-The thing is: is it worth to keep such relation and not to consider it as a
-many-to-one relationship? The matter is not about the ability to do that, but
-the implications in database schema simplicity and maintainability. 
-Also, referring to the guide that I've linked, integrity checks on that relationship
-might not be so trivial to implement.  
-\-jcondor
 
 ### User
 
@@ -119,16 +106,14 @@ questions | has\_many |
 Attribute | Type | Notes
 :-:|:-:|---
 url | string | Can be either local (self-hosted) or remote (i.e. hosted elsewhere)
-
-**TODO**: Question relationship
+questions | has\_many | Questions related to a picture
 
 ### Question
 
 Attribute | Type | Notes
 :-:|:-:|---
 answers | has\_many |
-
-**TODO**: Picture relationship
+pictures | belongs\_to | Picture for which the question is valid
 
 ### Answer
 
@@ -138,9 +123,6 @@ value | boolean | If false then it is the first answer, else the second one
 question | belongs\_to |
 labeler | belongs\_to |
 
-**NOTE**: I turned 'value' (which in the UML schema was `Domanda.domanda` from
-an _integer of domain {1,2}_ to a _boolean_ (which, if you think about that, is
-an integer of domain {0,1})
 
 
 ## User stories
