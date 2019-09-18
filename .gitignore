@@ -24,3 +24,6 @@
 
 # Ignore application configuration
 /config/application.yml
+
+# Ignore the loaded photos
+public/uploads/photo/image/*
