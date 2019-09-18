@@ -7,14 +7,17 @@ class UsersController < ApplicationController
     def smistamento     
         if(current_user.has_role? :admin)
             redirect_to users_path
+            return
         end
 
         if(current_user.has_role? :customer)
             redirect_to photos_path
+            return
         end
 
         if(current_user.has_role? :labeler)
             redirect_to answers_path
+            return
         end
     end
 
