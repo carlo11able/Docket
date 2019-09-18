@@ -1,0 +1,61 @@
+/* Docket
+ * Main stylesheet
+ */
+@import "bootstrap";
+
+/* General stylesheets */
+body {
+  background-color: white;
+  container {
+    margin: 0 auto;
+  }
+}
+
+/* Navbar */
+.navbar {
+  ul li {
+    font-size: 1.2em;
+    span { color: white; }
+  }
+}
+
+/* Images */
+.img_list{
+    width: 300px;
+    height: auto;
+}
+
+.img_with_text{
+  text-align: justify;
+  width: 300px;
+}
+
+.img_with_text img{
+  display: block;
+  margin: 0 auto;
+}
+
+
+p[class="alert alert-danger"]{
+  color: rgb(230,10,20)
+}
+
+
+p[class="alert alert-success"]{
+  color: rgb(20,230,20)
+}
+
+
+#winner{
+  color: rgb(0,255,0)
+}
+
+
+#draw{
+  color: rgb(255,255,0)
+}
+
+
+#loser{
+  color: rgb(255,0,0)
+}
