@@ -93,6 +93,17 @@ class User < ApplicationRecord
     
   end
 
+  # def give_me_remain_answers
+  #   query="select * from questions as q 
+  #         where  q.id not in (select question_id 
+  #                             from answers as a
+  #                             where a.user_id=#{self.id})"
+
+  #   @questions=@res=ActiveRecord::Base.connection.exec_query(query)
+  # end
+
+    
+
   private
   def self.parse_name(user, name)
     name_arr = name.split(" ")

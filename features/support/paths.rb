@@ -31,7 +31,9 @@ module NavigationHelpers
     when /^the edit photo\s?page$/
       edit_photo_path(Photo.first)
 
-
+    when /^the first question\s?page$/
+      photo_question_path(Photo.first.id,Question.first.id)
+    
     when /^the new question\s?page$/
       new_photo_question_path(Photo.first)
     
@@ -41,7 +43,9 @@ module NavigationHelpers
     when /^the customers\s?page$/
       "/users/customers"
     
-    
+    when /^the first answer\s?page$/
+      answer_path(Answer.first)
+
     when /^the user customer\s?page$/
       user_path(User.where(roles_mask: 4).first)
 
