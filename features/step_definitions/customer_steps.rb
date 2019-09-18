@@ -9,12 +9,8 @@ Given("A registered customer as {string}, {string}, {string}, {string}") do |nam
 end
 
 Given("I upload a photo") do
-    path_img="/home/andrea/Scrivania/foto/cut.jpg"
-    # @photo=Photo.create(user_id: User.first.id, image: path_img)
-    # @photo.save!
-    # fill_in "photo_image" , :type =>"file", :with => img
+    path_img="../../cut.jpg"
     attach_file('photo_image', path_img)
-    #click_button "Create Photo"
 end
 
 Given("I create new question") do 
