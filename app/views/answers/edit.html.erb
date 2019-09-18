@@ -53,4 +53,8 @@
         <%= f.submit %>
     </div>
 <% end %>
+<%if current_user.has_role? :admin%>
+  Answered by:<strong><%= link_to User.find(@answer.user_id).email, user_path(User.find(@answer.user_id))%></strong><br>
+<%end%>
+
 

@@ -12,6 +12,9 @@
       <%else%> 
         <%= image_tag(photo.image.url, alt: 'Image', class: "img_list") if photo.image? %>
       <%end%>
+      <%if current_user.has_role? :admin%>
+      <strong><%= link_to User.find(photo.user_id).email, user_path(User.find(photo.user_id))%></strong>
+      <%end%>
       <table>
       <tr>
         <td><%= link_to 'Show', photo %></td>

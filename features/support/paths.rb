@@ -37,8 +37,20 @@ module NavigationHelpers
     
     when /^the edit photo\s?page$/
       edit_photo_path(Photo.first)
-    
 
+    when /^the customers\s?page$/
+      "/users/customers"
+    
+    
+    when /^the user customer\s?page$/
+      user_path(User.where(roles_mask: 4).first)
+
+    when /^the labelers\s?page$/
+      "/users/labelers"
+    
+    when /^the user labeler\s?page$/
+      user_path(User.where(roles_mask: 2).first)
+    
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

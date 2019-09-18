@@ -1,18 +1,41 @@
-
-<p>
-  <strong>name:</strong>
-  <%= @user.name %>
-</p>
-
-<p>
-  <strong>surname:</strong>
-  <%= @user.surname %>
-</p>
-
-<p>
-  <strong>email:</strong>
-  <%= @user.email %>
-</p>
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
+<h2><%=@user.role_strings[0].capitalize%></h2>
+<h4>
+name:<strong><%= @user.name %></strong><br>
+surname:<strong><%= @user.surname %></strong><br>
+email:<strong><%= @user.email %></strong><br>
+<%= link_to 'Destroy User', user_path(@user), method: :delete, data: { confirm: 'Are you sure?' } %> | 
 <%= link_to 'Back', users_path %>
+</h4>
+
+<% if @user.has_role? :customer or @user.has_role? :admin%>
+  <% @photos=Photo.where(user_id: @user.id) %>
+  <% @photos.each do |photo| %>
+    <%if photo.url!=nil%>
+      <%= image_tag(photo.url, alt: 'Image', class: "img_list") if photo.url %>
+    <%else%> 
+      <%= image_tag(photo.image.url, alt: 'Image', class: "img_list") if photo.image? %>
+    <%end%>
+    <h3><strong><%= link_to 'Show Photo', photo_path(photo) %>
+  </strong></h3>
+  <%end%>
+<%end%>
+
+<% if @user.has_role? :labeler %>
+  <%@answers=Answer.where(user_id: @user.id)%>
+  <% @answers.each do |answer| %>
+    <% @question=Question.find(answer.question_id)%>
+    <% @photo=Photo.find(@question.photo_id)%>
+    <div class="img_with_text">
+      <% if @photo.url != nil %>
+        <%= image_tag(@photo.url, alt: 'Image', class: "img_list") if @photo.url %>
+      <% else %>
+        <%= image_tag(@photo.image.url, alt: 'Image', class: "img_list") if @photo.image? %>
+      <%end%>
+
+        <%= @question.question_text %><br>
+        <%= link_to 'Show Answer', answer_path(answer) %>
+      </div>
+  <%end%>
+
+<%end%>
+

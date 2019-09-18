@@ -12,6 +12,9 @@
 <% else %>
   <%= image_tag(@photo.image.url, alt: 'Image') if @photo.image? %>
 <%end%>
+<%if current_user.has_role? :admin%>
+  <strong><%= link_to User.find(@photo.user_id).email, user_path(User.find(@photo.user_id))%></strong>
+<%end%>
 
 <%count1=@question.count_answer1%>
 <%count2=@question.count_answer2%>
@@ -30,3 +33,34 @@
       <li><strong><span id="draw"><%= @question.question_answer2 %></strong> (Num Answer: <%=@question.count_answer2%>)</span></li>
     <%end%>
   <%end%>
+  </ul>
+
+<%if current_user.has_role? :admin%>
+
+    <h3><strong><%= link_to "Link to Answer", "/answers/question/#{@question.id}"%></strong></h3>
+
+
+    <h3>Correct Answer:<strong>
+    <%if @question.correct!=nil %>
+      <%if @question.correct==1 %>
+      <%=@question.question_answer1%>
+      <%else%>
+      <%=@question.question_answer2%>
+      <%end%>
+    <%end%>
+    </strong></h3>
+    
+  <% @answers=Answer.where(question_id: @question.id)%>
+  
+  <h3>Question's Answer</h3>
+  <% @answers.each do |answer|%>
+    <h4>
+    <%if answer.answer==2%>
+      <%= link_to @question.question_answer2, answer_path(answer)%>
+    <%else%>
+      <%= link_to @question.question_answer1, answer_path(answer)%>
+    <%end%>
+    <strong><%= link_to User.find(answer.user_id).email, user_path(User.find(answer.user_id))%></strong>
+    </h4><br>
+  <%end%>
+<%end%>

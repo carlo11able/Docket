@@ -4,6 +4,12 @@ class ApplicationController < ActionController::Base
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+
+     rescue_from ActionController::RoutingError do |exception|
+          logger.error 'Routing error occurred'
+          render 'static/notfound', status: 404
+     end
+
      protected
           def after_sign_in_path_for(resource)
                "/home"

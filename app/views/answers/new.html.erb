@@ -1,7 +1,7 @@
 <h1>New Answer</h1>
 
 <% @photo=Photo.find(@question.photo_id)%>
-<%@answer=Answer.new%>
+<%@answer=Answer.new %>
 
 <h4>
 <%= link_to 'New Answer', new_answer_path %> |
@@ -15,6 +15,9 @@
   <%= image_tag(@photo.image.url, alt: 'Image') if @photo.image? %>
 <%end%>
 
+<%if current_user.has_role? :admin %>
+    <h4><%= link_to "Show Question", photo_question_path(@photo.id,@question.id)%></h4><br>
+  <%end%>
 
 <%= form_with(model:@answer , url: answers_path, local: true) do |f| %>
   <% if @answer.errors.any? %>

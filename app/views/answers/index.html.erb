@@ -1,6 +1,10 @@
 
 <h1>answers</h1>
-<h4><%= link_to 'New answer', new_answer_path %></h4>
+<%if Question.all.empty?%>
+  <h4>There aren't any questions to answer</h4>
+<%else%>
+  <h4><%= link_to 'New answer', new_answer_path %></h4>
+<%end%>
     <% @answers.each do |answer| %>
       <% if can? :manage, answer%>
       <div class="img_with_text">
@@ -11,7 +15,9 @@
       <% else %>
         <%= image_tag(@photo.image.url, alt: 'Image', class: "img_list") if @photo.image? %>
       <%end%>
-
+        <%if current_user.has_role? :admin%>
+        <strong><%= link_to User.find(answer.user_id).email, user_path(answer.user)%></strong><br>
+        <%end%>
         <%= @question.question_text %><br>
         <%= link_to 'Show', answer_path(answer) %>
         <%= link_to 'Edit', edit_answer_path(answer) %>

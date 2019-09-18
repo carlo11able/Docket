@@ -26,6 +26,31 @@
     <%= form.text_field :question_answer2, id: :question_question_answer2, size:30,maxlength:50%>
   </div>
 
+  <% if current_user.has_role? :admin %>
+      <b>Correct Answer</b><br />
+      <%if params[:id]==nil%>
+        <%# SONO SU NEW %>
+        
+        <%= form.radio_button :correct, '1', :checked => true %> First<br />
+        <%= form.radio_button :correct, '2' %> Second<br/>
+      <%else%>  
+          <%# SONO SU EDIT %>
+          <%if question.correct!=nil %>
+            <%if question.correct==1 %>
+              <%= form.radio_button :correct, '1', :checked => true %> First<br />
+              <%= form.radio_button :correct, '2' %> Second<br/>
+            <%else%>
+              <%= form.radio_button :correct, '1' %> First<br />
+              <%= form.radio_button :correct, '2', :checked => true %> Second<br/>
+            <%end%>
+          <%else%>
+            <%= form.radio_button :correct, '1', :checked => true %> First<br />
+            <%= form.radio_button :correct, '2' %> Second<br/>
+          <%end%>        
+    <%end%>
+    
+  <%end%>
+
 
   <div class="actions">
     <%= form.submit %>

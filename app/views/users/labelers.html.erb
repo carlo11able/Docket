@@ -4,7 +4,12 @@
 <% @labelers.each do |labeler|%>
 <h3>
 <strong><%=labeler.email%></strong>
-<%= link_to 'View Labeler', user_path(labeler) %>
+<%= link_to 'View Labeler', user_path(labeler) %>==>
+<%if labeler.good_labeler?%>
+    He is reliable
+<%else%>
+    He isn't reliable
+<%end%>
 </h3>
 <br>
 <%end%>

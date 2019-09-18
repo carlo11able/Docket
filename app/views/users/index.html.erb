@@ -1,37 +1,24 @@
-<p id="notice"><%= notice %></p>
+<h1>User</h1>
 
-<h1>users</h1>
+<h3>
+<%= link_to 'Lista Labeler', "users/labelers" %>
+<%= link_to 'Lista Customer', "users/customers" %>
+<%= link_to 'Admin Profile', user_path(User.find(current_user.id))%>
+</h3>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Surname</th>
-      <th>Email</th>
-      <th>Roles_mask</th>
-      <th>Roles_mask</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
 
-  <tbody>
-    <% @users.each do |user| %>
-      <% if can? :read, user%>
-      <tr>
-        <td><%= user.name %></td>
-        <td><%= user.surname %></td>
-        <td><%= user.email %></td>
-        <td><%= user.roles_mask%>
-        <td><%= user.role_strings%>
+<h3>Batches</h3>
+<% @photos.each do |photo|%>
+    <%@user=User.find(photo.user_id)%>
+    <%if photo.url!=nil%>
+        <%= image_tag(photo.url, alt: 'Image', class: "img_list") if photo.url %>
+    <%else%> 
+        <%= image_tag(photo.image.url, alt: 'Image', class: "img_list") if photo.image? %>
+    <%end%>
+    <h4><%= link_to @user.email, user_path(@user) %> | <%= link_to "Show Photo", photo_path(photo) %></h4>
+    <br>
+<%end%>
 
-        <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-     <% end %>
-    <% end %>
-  </tbody>
-</table>
 
-<br>
+
 

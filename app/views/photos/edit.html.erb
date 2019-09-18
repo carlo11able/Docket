@@ -1,7 +1,7 @@
 <h1>Editing photo</h1>
 
 <h4>
-<%= link_to 'New Photo', @photo %> |
+<%= link_to 'New Photo', new_photo_path %> |
 <%= link_to 'Show Photo', @photo %> |
 <%= link_to 'Destroy Photo', photo_path(@photo) , method: :delete, data: { confirm: 'Are you sure?' } %>
 <%= link_to 'Back', photos_path %>
@@ -11,6 +11,9 @@
   <%= image_tag(@photo.url, alt: 'Image') if @photo.url %>
 <%else%> 
   <%= image_tag(@photo.image.url, alt: 'Image') if @photo.image? %>
+<%end%>
+<%if current_user.has_role? :admin%>
+  <strong><%= link_to User.find(@photo.user_id).email, user_path(User.find(@photo.user_id))%></strong>
 <%end%>
 
 <%= render 'form', photo: @photo %>

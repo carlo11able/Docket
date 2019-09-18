@@ -12,6 +12,9 @@
 <% else %>
   <%= image_tag(@photo.image.url, alt: 'Image') if @photo.image? %>
 <%end%>
+<%if current_user.has_role? :admin%>
+  <strong><%= link_to User.find(@photo.user_id).email, user_path(User.find(@photo.user_id))%></strong>
+<%end%>
 
 <h3>
 <%= render 'form', question: @question , url: photo_questions_path %>

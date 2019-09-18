@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   #devise_for :users
 
 
-
   
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
@@ -17,15 +16,19 @@ Rails.application.routes.draw do
 
   get "users/labelers" => "users#labelers"
 
-  # resources :photos ,:shallow => true do 
-  #   resources :questions
-  # end
+  
   resources :photos do 
     resources :questions 
   end
 
   resources :answers
 
+  get "answers/question/:id" => "answers#nuova"
+
   #resources :users [:show, :update, :destroy]
-  resources :users
+  resources :users, only: [:index, :show, :destroy]
+
+
+  match "*path", :to => "errors#internal_server_error", :via => :all
+
 end

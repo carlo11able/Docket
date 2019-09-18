@@ -12,7 +12,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :omniauthable, :omniauth_providers => [:facebook]
 
-  ROLES = [:admin, :labeler, :customer, :guest]
+  ROLES = [:admin, :labeler, :customer]
   
   
   # def self.create_with_omniauth(auth)
@@ -70,6 +70,27 @@ class User < ApplicationRecord
   def has_role?(requested_role )
     roles.include?(requested_role)
 
+  end
+
+  def good_labeler?
+    if self.has_role? :labeler
+      @answers=Answer.where(user_id: self.id)
+      @answers.each do |answer|
+        @question=Question.find(answer.question_id)
+        if @question.correct == nil
+          puts "Salto"
+          next
+        end
+        puts "valuto"
+        if answer.answer != @question.correct
+          return false
+        end
+      end
+      return true
+    else
+      return false
+    end
+    
   end
 
   private

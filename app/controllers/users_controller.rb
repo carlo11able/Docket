@@ -1,12 +1,10 @@
 class UsersController < ApplicationController
 
-    #protect_from_forgery with: :null_session        #annulla CSRF token authentication
     before_action :authenticate_user!
 
 
     
-    def smistamento
-        
+    def smistamento     
         if(current_user.has_role? :admin)
             redirect_to users_path
         end
@@ -18,26 +16,25 @@ class UsersController < ApplicationController
         if(current_user.has_role? :labeler)
             redirect_to answers_path
         end
-
     end
 
 
     def customers
         begin
-            authorize! :manage, User, :message => "BEWARE: You are not authorized to read a photo."
+            authorize! :manage, User, :message => "BEWARE: You are not authorized to manage a user."
         rescue CanCan::AccessDenied
-            #render html: "ACCESSO NEGATO" , status: 403
             render "static/accessdenied" , status: 403
+            return
         end
         @customers=User.where(roles_mask: 4)
     end
 
     def labelers
         begin
-            authorize! :manage, User, :message => "BEWARE: You are not authorized to read a photo."
+            authorize! :manage, User, :message => "BEWARE: You are not authorized to manage a user."
         rescue CanCan::AccessDenied
-            #render html: "ACCESSO NEGATO" , status: 403
             render "static/accessdenied" , status: 403
+            return
         end
         @labelers=User.where(roles_mask: 2)
     end
@@ -45,13 +42,12 @@ class UsersController < ApplicationController
     
     def index
         begin
-            authorize! :read, current_user, :message => "BEWARE: You are not authorized to read a photo."
+            authorize! :manage, User, :message => "BEWARE: You are not authorized to manage a user."
         rescue CanCan::AccessDenied
-            #render html: "ACCESSO NEGATO" , status: 403
             render "static/accessdenied" , status: 403
+            return
         end
-        @users=User.all()
-        #render :html => "prova"
+        @photos=Photo.all()
     end
     
 
@@ -60,41 +56,40 @@ class UsersController < ApplicationController
             id = params[:id] # retrieve user ID from URI route
             @user=User.find(id)
             begin
-                authorize! :read, @user, :message => "BEWARE: You are not authorized to read a photo."
+                authorize! :manage, User, :message => "BEWARE: You are not authorized to manage a user."
             rescue CanCan::AccessDenied
                 render "static/accessdenied" , status: 403
+                return
             end
         rescue ActiveRecord::RecordNotFound 
-            # redirect_to :controller => "users", :action => "index"
             render "static/notfound"
             flash[:warning] = "There is no user with that index"
             return
         end
-        # will render app/views/users/show.html.erb by default
     end
 
 
    
 
 
-    def edit
-        begin
-            id = params[:id] # retrieve user ID from URI route
-            @user=User.find(id)
-            begin
-                authorize! :update, @user, :message => "BEWARE: You are not authorized to read a photo."
-            rescue CanCan::AccessDenied
-                #render html: "ACCESSO NEGATO" , status: 403
-                render "static/accessdenied" , status: 403
-            end
-        rescue ActiveRecord::RecordNotFound 
-            redirect_to :controller => "user", :action => "index"
-            flash[:warning] = "There is no user with that index"
-            return
-        end
-        redirect_to edit_user_registration_path
+    # def edit
+    #     begin
+    #         id = params[:id] # retrieve user ID from URI route
+    #         @user=User.find(id)
+    #         begin
+    #             authorize! :update, @user, :message => "BEWARE: You are not authorized to read a photo."
+    #         rescue CanCan::AccessDenied
+    #             #render html: "ACCESSO NEGATO" , status: 403
+    #             render "static/accessdenied" , status: 403
+    #         end
+    #     rescue ActiveRecord::RecordNotFound 
+    #         redirect_to :controller => "user", :action => "index"
+    #         flash[:warning] = "There is no user with that index"
+    #         return
+    #     end
+    #     redirect_to edit_user_registration_path
         
-    end
+    # end
 
     # def update
     #     @user = User.find params[:id]
@@ -117,18 +112,34 @@ class UsersController < ApplicationController
     # end
 
     def destroy
-        @user = User.find(params[:id])
-        # authorize! :destroy, @user, :message => "BEWARE: You are not authorized to delete a user."
-        # if current_user != @user.user && !current_user.is?(:moderator) && !current_user.is?(:admin)
-        #     flash[:warning] = "You are not authorized to delete this user"
-        #     redirect_to user_path(@user)
-        # end
+        begin
+            @user = User.find params[:id]
+        rescue ActiveRecord::RecordNotFound 
+            render "static/notfound" , status: 404
+            return
+        end
+
+        begin
+            authorize! :manage, User, :message => "BEWARE: You are not authorized to destroy a user."
+        rescue CanCan::AccessDenied
+            render "static/accessdenied" , status: 403
+        end
+
         @user.destroy
         flash[:notice] = "User #{@user.id} deleted."
         redirect_to users_path
     end
 
     private 
+
+    def set_user
+        begin 
+            @user = User.find(params[:id])
+        rescue ActiveRecord::RecordNotFound 
+            render "static/notfound" , status: 404
+            return
+        end
+    end
 
     def user_params_create
         params[:user].permit(:name, :surname, :email, :password, :password_confirmation)
