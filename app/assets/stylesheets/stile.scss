@@ -6,8 +6,8 @@
 /* General stylesheets */
 body {
   background-color: white;
-  container {
-    margin: 0 auto;
+  .container {
+    margin: 56px auto 24px;
   }
 }
 
@@ -20,29 +20,15 @@ body {
 }
 
 /* Images */
-.img_list{
-    width: 300px;
-    height: auto;
-}
-
 .img_with_text{
   text-align: justify;
-  width: 300px;
+  max-width: 100%;
 }
 
-.img_with_text img{
+.main-content img {
+  max-width: 100%;
   display: block;
   margin: 0 auto;
-}
-
-
-p[class="alert alert-danger"]{
-  color: rgb(230,10,20)
-}
-
-
-p[class="alert alert-success"]{
-  color: rgb(20,230,20)
 }
 
 
