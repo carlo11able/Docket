@@ -176,3 +176,6 @@ labeler | belongs\_to |
 * [ ] As an **unregistered user** I want to **signup** with email so that I can become a _Labeler_ or _Customer_
 * [ ] As a _Labeler_ I want to **login** with my email so that I can see **labeler home page**
 
+
+
+Link To Google Docs: https://docs.google.com/document/d/1IUMADjBWM-SG9SWTiomd8WQZ9r-28Ew_hYnUhwtfJGA/edit?fbclid=IwAR0ot6AAEcpNgmAx4FZsWGEbQrZjuPGIGNcWKKfy5k4gfGVKc4NF53JLk70#
