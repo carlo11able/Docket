@@ -53,6 +53,7 @@ The roles given to the users inside the platform are the following
 
 The _Labeler_ the crowdsourcer itself, as it answers to the proposed questions. 
 From the crowdsourcing presepective, it executes the batch.
+A _Labeler_ can sign in also trough Facebook
 
 ### Customer
 
@@ -64,7 +65,12 @@ From the crowdsourcing presepective, it gives the batch to the crowd.
 
 _Administrators_ monitor the overall platform functioning, as well as the
 congruity of pictures and questions. They shall also report anomalies or bugs to
-the developers.
+the developers.If necessary he can delete user's account, and he can tracks the labelers
+who don't respond to questions in the correct way.
+He also can upload photo using a REST service, called LoremFlickr, Admin should only
+insert the key word on the form and LoremFlickr returns the url of this image.
+The Admin upload photos with the willingness to track the bad labelers, who answers wrong, 
+infact Admin can choose which is the corrrect answer about a question
 
 
 ## Data Models
@@ -127,11 +133,6 @@ labeler | belongs\_to |
 
 ## User stories
 
-#### About signup and login
-
-* [ ] As an **unregistered user** I want to **signup** with email so that I can become a _Labeler_ or _Customer_
-* [ ] As a _Labeler_ I want to **login** with my email so that I can see **labeler home page**
-* [ ] As a _Labeler_ I want to **login** with **facebook** so that I can see **labeler home page**
 
 #### About Labelers
 
@@ -169,4 +170,9 @@ labeler | belongs\_to |
 * [ ] As an _Admin_ I want to have **batch answer page** so that I can **delete labeler's answer**
 * [ ] As an _Admin_ I want to see **batch page** so that I can see the **customer**'s profile who upload the **batch**
 * [ ] As an _Admin_ I want to see **batch page** so that I can **delete batch**
+
+#### About signup and login
+
+* [ ] As an **unregistered user** I want to **signup** with email so that I can become a _Labeler_ or _Customer_
+* [ ] As a _Labeler_ I want to **login** with my email so that I can see **labeler home page**
 
