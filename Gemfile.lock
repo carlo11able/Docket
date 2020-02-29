@@ -182,7 +182,7 @@ GEM
     orm_adapter (0.5.0)
     pg (1.1.4)
     public_suffix (3.1.1)
-    puma (3.12.1)
+    puma (3.12.3)
     rack (2.0.7)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
@@ -316,7 +316,7 @@ DEPENDENCIES
   nokogiri (>= 1.10.4)
   omniauth-facebook
   pg
-  puma (~> 3.7)
+  puma (~> 3.12)
   rails (~> 5.1.7)
   rspec
   rspec-rails
